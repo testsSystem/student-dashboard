@@ -31,7 +31,7 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-function Basic() {
+function SignIn() {
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
@@ -179,4 +179,4 @@ function Basic() {
     </BasicLayout>
   );
 }
-export default Basic;
+export default SignIn;

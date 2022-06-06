@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
@@ -10,28 +10,29 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { AuthContext } from 'context/AuthContext';
 
 const TestsDisplay = () => {
-    const [testData, setTestsData] = useState()
-
-    // dxcdjhjhjh
-    // useEffect(() => {
-
-    //         const data = await fetch(`http://localhost:3000/api/v1/tests/getStudentTest/2`);
-    //         const json = await data.json();
-    //         console.log(testData)
-    //     }
-    //     fetchData()
-    //         .catch(console.error);;
-    // }, [])
+    const [testData, setTestsData] = useState(null)
+    const ctx = useContext(AuthContext);
+    const url = `http://localhost:3000/api/v1/tests/getStudentTest/2`
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            fetch(`http://localhost:3000/api/v1/tests/getStudentTest/2`)
-                .then(response => response.json())
-                .then(data => setTestsData(data.result.Questions))
-                .catch(err => console.error(err));
+        const headers = {
+            headers: {
+                'authorization': 'Bearer ' + ctx.token,
+            }
+        }
+        const fetchData = async (err) => {
+            
+            const response = await fetch(url, headers)
+            const resJson = await response.json()
+            setTestsData(resJson.result)
+            console.log(resJson.result)
+            if (err) {
+                console.error(err)
+            }
         }
         fetchData()
     }, [])
@@ -46,7 +47,7 @@ const TestsDisplay = () => {
                     <Card>
                         <MDBox p={2} mt={0}>
                             <Grid container spacing={5}>
-                                {testData && testData.map((questions) => {
+                                {/* {testData && testData.map((questions) => {
                                     return (
                                         <div key={questions.id}>
                                             <Grid item xs={12}>
@@ -78,7 +79,7 @@ const TestsDisplay = () => {
                                         </div>
                                     )
                                 }
-                                )}
+                                )} */}
                                 {/* <Grid item xs={12}>
                                     <FormControl>
                                         <RadioGroup

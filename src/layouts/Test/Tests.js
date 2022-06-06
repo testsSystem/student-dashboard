@@ -17,39 +17,58 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import MDButton from "components/MDButton";
 import Button from '@mui/material/Button';
+import DataTable from "examples/Tables/DataTable";
 
-// Table functions
-function createData(testTitle, startsAt, endsAt) {
-    return { testTitle, startsAt, endsAt };
-}
 
-const rows = [
-    createData('Math 101', '2022/09/11 9:00 pm', '2022/09/11 10:00 pm'),
+const columns = [
+    {Header: 'Test Title', accessor: 'title', width: '40%', align: 'left'},
+    {Header: 'Starts At', accessor: 'startsAt', width: '20%', align: 'left'},
+    {Header: 'Ends At', accessor: 'endsAt', width: '20%', align: 'left'},
+    {Header: 'Start Test', accessor: 'startTest', width: '10%', align: 'left'},
 ]
-
 
 
 const Tests = () => {
 
     const [studentSessions, setStudentSessions] = useState()
-    const [testsData, setTestsData] = useState()
     const ctx = useContext(AuthContext);
-
-    console.log(11111111111111111, ctx.token)
+    const sessionsUrl = 'http://localhost:3000/api/v1/students/sessionByUserId/'
+    const [rows, setRows] = useState([])
+    const handleClick= (test_id) => {
+        console.log("test_id: " + test_id)
+        
+    }
     useEffect(() => {
-        fetch('http://localhost:3000/api/v1/students/sessionByUserId/',
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    'authorization': 'Bearer ' + ctx.token,
-                }
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
-        // console.log(studentSessions)
+        const headers = {
+            headers: {
+                'authorization': 'Bearer ' + ctx.token,
+            }
+        }
+        const fetchSessions = async (err) => {
+            const response = await fetch(sessionsUrl, headers)
+            const resJson = await response.json()
+            setStudentSessions(resJson.result)
+            console.log(resJson.result)
+            if (err) {
+                console.error(err)
+            }
+        }
+        fetchSessions()
+
+        const sessionsTable = studentSessions && studentSessions.map((data) => {
+            console.log(data);
+            return {
+                title: data.Test.title,
+                startsAt: data.Test.start_at,
+                endsAt: data.Test.end_at,
+                startTest: <MDButton color='info' variant='contained' onClick={() => handleClick(data.test_id)} >Start now</MDButton>
+            }
+        })
+        setRows(sessionsTable)
+        console.log("111111", rows)
 
     }, [])
+
 
     return (
         <>
@@ -80,36 +99,10 @@ const Tests = () => {
 
                         {/*  Body */}
                         <MDBox p={2} mt={0}>
-                            <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow
-                                            sx={{ minWidth: 650 }}
-                                        >
-                                            <TableCell>Test Title</TableCell>
-                                            <TableCell align="right">Starts At</TableCell>
-                                            <TableCell align="right">Ends At</TableCell>
-                                            <TableCell align="right">Discription</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {rows.map((row) => (
-                                            <TableRow
-                                                key={row.testTitle}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {row.testTitle}
-                                                </TableCell>
-                                                <TableCell align="right">{row.startsAt || "starts at"}</TableCell>
-                                                <TableCell align="right">{row.endsAt || "ends at"}</TableCell>
-                                                <TableCell align="right">{row.discription || "discription"}</TableCell>
-                                                <TableCell align="right"><MDButton color='info' variant='contained' >Start now</MDButton></TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            {rows && <DataTable
+                                table={{ columns, rows}}
+                                // pagination=  {{color: "primary"}}
+                            />}
                         </MDBox>
                     </Card>
                 </MDBox>

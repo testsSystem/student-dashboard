@@ -34,7 +34,7 @@ import { useNavigate } from "react-router-dom";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
-function Cover() {
+function SignUp() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const firstnameRef = useRef(null);
@@ -186,4 +186,4 @@ function Cover() {
   );
 }
 
-export default Cover;
+export default SignUp;

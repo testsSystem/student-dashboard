@@ -38,12 +38,13 @@ function Basic() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
   const login = () => {
     const email = emailRef.current.querySelector("input[type=email]").value;
     const password = passwordRef.current.querySelector(
       "input[type=password]"
     ).value;
-    fetch(`http://localhost:3000/api/v1/instructors/login`, {
+    fetch(`http://localhost:3000/api/v1/students/login`, {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -59,7 +60,8 @@ function Basic() {
           console.log(loggedIn);
           if (loggedIn.success) {
             console.log(loggedIn);
-            ctx.login(loggedIn.token);
+            ctx.login(loggedIn.result);
+            window.localStorage.setItem('token', loggedIn.result)
             navigate("/dashboard");
           }
         });

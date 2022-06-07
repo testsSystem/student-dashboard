@@ -36,7 +36,7 @@ const Tests = () => {
     const [rows, setRows] = useState([])
     const handleClick= (test_id) => {
         console.log("test_id: " + test_id)
-        
+
     }
     useEffect(() => {
         const headers = {
@@ -54,9 +54,11 @@ const Tests = () => {
             }
         }
         fetchSessions()
+    }, [])
 
+    useEffect((err) => {
         const sessionsTable = studentSessions && studentSessions.map((data) => {
-            console.log(data);
+            console.log("48455884", data);
             return {
                 title: data.Test.title,
                 startsAt: data.Test.start_at,
@@ -64,11 +66,13 @@ const Tests = () => {
                 startTest: <MDButton color='info' variant='contained' onClick={() => handleClick(data.test_id)} >Start now</MDButton>
             }
         })
+        if (err) {
+            console.error(err)
+        }
+
         setRows(sessionsTable)
-        console.log("111111", rows)
-
-    }, [])
-
+        console.log("1111511", rows)
+    }, [studentSessions])
 
     return (
         <>

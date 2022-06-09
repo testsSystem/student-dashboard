@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { AuthContext } from 'context/AuthContext';
 
-const TestsDisplay = () => {
+const TestsDisplay = (test_id) => {
     const [testData, setTestsData] = useState()
     const ctx = useContext(AuthContext);
     const url = `http://localhost:3000/api/v1/tests/getStudentTest/2`

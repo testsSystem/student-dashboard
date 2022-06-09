@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
 
-const Session = () => {
+const TestEnterance = () => {
     return (
         <>
             <DashboardLayout>
@@ -73,4 +73,4 @@ const Session = () => {
     )
 }
 
-export default Session
+export default TestEnterance

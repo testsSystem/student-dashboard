@@ -8,10 +8,10 @@ import TextField from "@mui/material/TextField";
 import MDButton from "components/MDButton";
 import TestEnterance from "./components/TestEnterance"
 import TestsDisplay from "./components/TestsDisplay"
-const Session = () => {
+const Session = ({test_id}) => {
     return (
         <>
-            <TestsDisplay />
+            <TestsDisplay test_id={test_id} />
             {/* <TestEnterance /> */}
         </>
     )

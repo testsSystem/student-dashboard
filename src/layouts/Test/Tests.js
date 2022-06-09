@@ -18,6 +18,9 @@ import Paper from '@mui/material/Paper';
 import MDButton from "components/MDButton";
 import Button from '@mui/material/Button';
 import DataTable from "examples/Tables/DataTable";
+import Session from 'layouts/session';
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 
 const columns = [
@@ -28,17 +31,49 @@ const columns = [
 ]
 
 
+
+// var token = "eyJ0eXAiO...";
+
+
+
 const Tests = () => {
 
-    const [studentSessions, setStudentSessions] = useState()
+    const [studentTest, setStudentTest] = useState()
+    const [createdSession, setCreatedSession] = useState()
     const ctx = useContext(AuthContext);
-    const sessionsUrl = 'http://localhost:3000/api/v1/tests'
+    const Url = 'http://localhost:3000/api/v1/tests'
     const [rows, setRows] = useState([])
+    const navigate = useNavigate()
+    const userID = jwt_decode(ctx.token).id;
+
+    // console.log(decoded, "token");
 
 
     const handleClick = (test_id) => {
         console.log("test_id: " + test_id)
-
+        const createSession = () => {
+            const headers = {
+                method: "POST",
+                headers: {
+                    'authorization': 'Bearer ' + ctx.token,
+                },
+                body: JSON.stringify({
+                    "user_id": userID,
+                    "test_id": test_id,
+                }),
+            }
+            const fetching = async (err) => {
+                const response = await fetch("http://localhost:3000/api/v1/tests/session", headers)
+                const resJson = await response.json()
+                setCreatedSession(resJson)
+                console.log(resJson, "session")
+                if (err) {
+                    console.error(err)
+                }
+            }
+            fetching()
+        }
+        createSession()
     }
     useEffect(() => {
         const headers = {
@@ -46,20 +81,20 @@ const Tests = () => {
                 'authorization': 'Bearer ' + ctx.token,
             }
         }
-        const fetchSessions = async (err) => {
-            const response = await fetch(sessionsUrl, headers)
+        const fetchTests = async (err) => {
+            const response = await fetch(Url, headers)
             const resJson = await response.json()
-            setStudentSessions(resJson.result)
+            setStudentTest(resJson.result)
             console.log(resJson.result)
             if (err) {
                 console.error(err)
             }
         }
-        fetchSessions()
+        fetchTests()
     }, [])
 
     useEffect((err) => {
-        const sessionsTable = studentSessions && studentSessions.map((data) => {
+        const sessionsTable = studentTest && studentTest.map((data) => {
             console.log(data, "data");
             return {
                 title: data.title,
@@ -74,7 +109,7 @@ const Tests = () => {
 
         setRows(sessionsTable)
         console.log(rows, "rows")
-    }, [studentSessions])
+    }, [studentTest])
 
     return (
         <>

@@ -17,19 +17,22 @@ const TestsDisplay = () => {
     const ctx = useContext(AuthContext);
     const url = `http://localhost:3000/api/v1/tests/getStudentTest/2`
     const [result, setResult] = useState({})
-    const [selectedAnsArr, setSelectedAnsArr] = useState([
-        // {
-        //     questoin_id: "",
-        //     ans_id: ""
-        // },
-        // {
-        //     questoin_id: "",
-        //     ans_id: ""
-        // },{
-        //     questoin_id: "",
-        //     ans_id: ""
-        // },
-    ])
+    const [selectedAnsArr, setSelectedAnsArr] = useState([])
+
+    const handleChange = (e, i, j) => {
+
+        
+        if(selectedAnsArr.some((ans) => ans.questionId === testData.Questions[i].id)){
+            console.log("", "first")
+            let quIndex =selectedAnsArr.findIndex((ans) => testData.Questions[i].id === ans.questionId) 
+            selectedAnsArr[quIndex].selectedAnswer = +e.target.value
+            console.log(selectedAnsArr)
+        } else{
+            console.log(testData.Questions[i].Answers_options[j], "sec")
+            setSelectedAnsArr(old => [...old, {selectedAnswer: testData.Questions[i].Answers_options[j].id, questionId: testData.Questions[i].Answers_options[j].question_id}])
+        }
+    }
+    console.log(selectedAnsArr)
     
 
     useEffect(() => {
@@ -52,52 +55,15 @@ const TestsDisplay = () => {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        console.log('11111111')
-        const resultObject = testData &&
-        {
-            test_id: testData.id,
-            session_id: "session_id",
-            selectedAnsArr: selectedAnsArr
-        }
-
-
-        setResult(resultObject)
-        console.log("9999999")
-    }, [testData])
-
-
     const handleClick = () => {
-        setResult(result => ({
-            ...result,
-            ...selectedAnsArr
-        }));
-        // setSelectedAnsArr([...selectedAnsArr, {"question_id": "questions.id" }])
-
+        setResult({
+            session_id: 1,
+            answerOptions: selectedAnsArr,
+        })
         console.log(result)
-        console.log(testData)
-
-        console.log(selectedAnsArr)
-
     }
 
-    const handleChange = (j, i) => {
-
-        // setSelectedAns([...selectedAns, e.target.value])
-        console.log(j, i)
-    }
-    const handleChange2 = (e) => {
-
-        // setSelectedAns([...selectedAns, e.target.value])
-        console.log("5454454")
-    }
-    // const addSelectedAns = (i) => {
-        
-    // }
-
-    const setdata = (q_id, ans_id) => {
-        setSelectedAnsArr([...selectedAnsArr, {"question_id": q_id, selectedAns_id: ans_id }])
-    }
+    
     return (
         <>
             <DashboardLayout>
@@ -106,8 +72,6 @@ const TestsDisplay = () => {
                         <MDBox p={2} mt={0}>
                             <Grid container spacing={1}>
                                 {testData && testData.Questions.map((questions, i) => {
-                                    // setSelectedAnsArr([...selectedAnsArr, {"question_id": questions.id }])
-                                    // () => {setdata(questions.id)}
                                     return (
                                         <Grid item xs={12} m={3} key={i} className="1111111">
                                             <MDBox>
@@ -127,12 +91,11 @@ const TestsDisplay = () => {
                                                                 <RadioGroup
                                                                     aria-labelledby="demo-radio-buttons-group-label"
                                                                     name="radio-buttons-group"
-                                                                    // onChange={() => {setdata(questions.id, event.target.value)}}
                                                                 >
                                                                     {
                                                                         questions.Answers_options.map((options, j) => {
                                                                             return (
-                                                                                <FormControlLabel onChange={() => handleChange(j, i)} key={j} value={options.id} control={<Radio />} label={options.answer} />
+                                                                                <FormControlLabel onChange={(e) => handleChange(e, i, j)} key={j} value={options.id} control={<Radio />} label={options.answer} />
                                                                             )
                                                                         })
                                                                     }
@@ -147,7 +110,7 @@ const TestsDisplay = () => {
                                 }
                                 )}
                                 <Grid item xs={12}>
-                                    <MDButton color='info' variant='contained' onClick={handleClick} >Start now</MDButton>
+                                    <MDButton color='info' variant='contained' onClick={handleClick} >Submit</MDButton>
 
                                 </Grid>
                             </Grid>

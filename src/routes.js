@@ -48,6 +48,7 @@ import SignUp from "layouts/authentication/sign-up";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Tests from "layouts/Test/Tests";
+import TestsTable from "layouts/Test/componentsShared/TestsTable";
 
 const routes = [
   {

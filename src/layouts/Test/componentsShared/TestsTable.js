@@ -1,54 +1,122 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+// import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+// import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+// import Grid from "@mui/material/Grid";
+// import Card from "@mui/material/Card";
+// import MDBox from "components/MDBox";
+// import MDTypography from "components/MDTypography";
+// import Footer from "examples/Footer";
+// import DataTable from "examples/Tables/DataTable";
+// import { useEffect, useState } from "react";
+// import { requestApi } from "../../../helpers";
+// import API_URLS from "../../api";
+// import MDButton from "components/MDButton";
+// import Icon from "@mui/material/Icon";
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
+// const columns = [
+//     { Header: "title", accessor: "title", width: "50%", align: "center" },
+//     //   { Header: "category", accessor: "category", align: "left" },
+//     //   { Header: "location", accessor: "location", align: "center" },
+//     { Header: "enroll", accessor: "enroll", width: "50%", align: "center" },
+// ];
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-export default function BasicTable() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-}
+// function TestsTable(props) {
+//     const [rows, setRows] = useState([]);
+//     const [tests, setTests] = useState([]);
+//     const [loading, setLoading] = useState(false);
+
+//     //
+
+//     const fetchTests = async () => {
+//         let data = {
+//             url: API_URLS().TESTS.ALL_TESTS,
+//         };
+//         let res = await requestApi(data);
+//         setTests(res.data.result);
+//         console.log(res.data.result);
+//     };
+
+//     useEffect(() => {
+//         fetchTests();
+//     }, []);
+
+//     useEffect(() => {
+//         const allTests = tests?.map((test, i) => {
+//             //   return (
+//             //     <div key={i}>
+//             //       {test.id}
+//             //       {test.title}
+//             //       {test.discriptoin}
+//             //     </div>
+//             //   );
+//             return {
+//                 title: (
+//                     <div key={i}>
+//                         {test.id}
+//                         {test.title}
+//                         {test.descriptoin}
+//                     </div>
+//                 ),
+//                 enroll: (
+//                     <>
+//                         <MDButton variant="text" color="info">
+//                             <Icon>add</Icon>&nbsp; Enroll
+//                         </MDButton>
+//                     </>
+//                 ),
+//             };
+//         });
+
+//         setRows(allTests);
+//     }, [tests]);
+
+//     return (
+//         <DashboardLayout>
+//             <DashboardNavbar />
+//             <MDBox pt={6} pb={3}>
+//                 <Grid container spacing={6}>
+//                     <Grid item xs={12}>
+//                         <Card>
+//                             <MDBox
+//                                 mx={2}
+//                                 mt={-3}
+//                                 py={3}
+//                                 px={2}
+//                                 variant="gradient"
+//                                 bgColor="info"
+//                                 borderRadius="lg"
+//                                 coloredShadow="info"
+//                             >
+//                                 <Grid
+//                                     container
+//                                     direction="row"
+//                                     justifyContent="space-between"
+//                                     alignItems="center"
+//                                 >
+//                                     <MDTypography
+//                                         variant="h6"
+//                                         color="white"
+//                                         justifyContent="center"
+//                                     >
+//                                         Session Info
+//                                     </MDTypography>
+//                                 </Grid>
+//                             </MDBox>
+//                             <MDBox pt={3}>
+//                                 <DataTable
+//                                     table={{ columns, rows }}
+//                                     isSorted={false}
+//                                     entriesPerPage={false}
+//                                     showTotalEntries={false}
+//                                     noEndBorder
+//                                 />
+//                             </MDBox>
+//                         </Card>
+//                     </Grid>
+//                 </Grid>
+//             </MDBox>
+//             <Footer />
+//         </DashboardLayout>
+//     );
+// }
+// export default TestsTable;

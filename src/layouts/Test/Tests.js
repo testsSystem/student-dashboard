@@ -21,10 +21,10 @@ import DataTable from "examples/Tables/DataTable";
 
 
 const columns = [
-    {Header: 'Test Title', accessor: 'title', width: '40%', align: 'left'},
-    {Header: 'Starts At', accessor: 'startsAt', width: '20%', align: 'left'},
-    {Header: 'Ends At', accessor: 'endsAt', width: '20%', align: 'left'},
-    {Header: 'Start Test', accessor: 'startTest', width: '10%', align: 'left'},
+    { Header: 'Test Title', accessor: 'title', width: '40%', align: 'left' },
+    { Header: 'Starts At', accessor: 'startsAt', width: '20%', align: 'left' },
+    { Header: 'Ends At', accessor: 'endsAt', width: '20%', align: 'left' },
+    { Header: 'Start Test', accessor: 'startTest', width: '10%', align: 'left' },
 ]
 
 
@@ -32,9 +32,11 @@ const Tests = () => {
 
     const [studentSessions, setStudentSessions] = useState()
     const ctx = useContext(AuthContext);
-    const sessionsUrl = 'http://localhost:3000/api/v1/students/sessionByUserId/'
+    const sessionsUrl = 'http://localhost:3000/api/v1/tests'
     const [rows, setRows] = useState([])
-    const handleClick= (test_id) => {
+
+
+    const handleClick = (test_id) => {
         console.log("test_id: " + test_id)
 
     }
@@ -58,12 +60,12 @@ const Tests = () => {
 
     useEffect((err) => {
         const sessionsTable = studentSessions && studentSessions.map((data) => {
-            console.log("48455884", data);
+            console.log(data, "data");
             return {
-                title: data.Test.title,
-                startsAt: data.Test.start_at,
-                endsAt: data.Test.end_at,
-                startTest: <MDButton color='info' variant='contained' onClick={() => handleClick(data.test_id)} >Start now</MDButton>
+                title: data.title,
+                // startsAt: data.start_at,
+                // endsAt: data.end_at,
+                startTest: <MDButton color='info' variant='contained' onClick={() => handleClick(data.id)} >Start now</MDButton>
             }
         })
         if (err) {
@@ -71,7 +73,7 @@ const Tests = () => {
         }
 
         setRows(sessionsTable)
-        console.log("1111511", rows)
+        console.log(rows, "rows")
     }, [studentSessions])
 
     return (
@@ -104,8 +106,12 @@ const Tests = () => {
                         {/*  Body */}
                         <MDBox p={2} mt={0}>
                             {rows && <DataTable
-                                table={{ columns, rows}}
+                                table={{ columns, rows }}
                                 // pagination=  {{color: "primary"}}
+                                isSorted={false}
+                                entriesPerPage={false}
+                                showTotalEntries={false}
+                                noEndBorder
                             />}
                         </MDBox>
                     </Card>

@@ -12,6 +12,7 @@ const Session = () => {
     return (
         <>
             <TestsDisplay />
+            {/* <TestEnterance /> */}
         </>
     )
 }

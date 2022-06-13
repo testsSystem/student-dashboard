@@ -6,7 +6,8 @@ import MDTypography from "components/MDTypography";
 import Grid from "@mui/material/Grid";
 import MDButton from "components/MDButton";
 
-const TestEnterance = () => {
+const TestEnterance = ({start}) => {
+    
     return (
         <>
             <DashboardLayout>
@@ -62,7 +63,7 @@ const TestEnterance = () => {
                             </Grid>
                             <Grid item xs={12} container  justifyContent="space-between">
                             <MDButton color='secondary' variant='contained' >Cancel</MDButton>
-                            <MDButton color='info' variant='contained' >Start now</MDButton>
+                            <MDButton color='info' variant='contained' onClick={() => start()}>Start now</MDButton>
                             </Grid>
                             </Grid>
                         </MDBox>

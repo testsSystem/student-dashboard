@@ -30,11 +30,3 @@ export const AuthProvider = (props) => {
         {props.children}
     </AuthContext.Provider>
 }
-
-// export const TestIdContext = createContext({
-//     id: ''
-// })
-
-// export const TestIdProvider = createContext({
-//     id: ''
-// })

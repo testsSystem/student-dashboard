@@ -11,13 +11,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { AuthContext } from 'context/AuthContext';
+import { useParams } from 'react-router-dom';
+import { useSearchParams  } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-const TestsDisplay = (test_id) => {
+
+const TestsDisplay = ({test_id, session_id}) => {
     const [testData, setTestsData] = useState()
     const ctx = useContext(AuthContext);
-    const url = `http://localhost:3000/api/v1/tests/getStudentTest/2`
+    // const ctxData = useContext(SessionsContext);
+    const navigate = useNavigate()
+
+
+    const testId = test_id
+    const url = `http://localhost:3000/api/v1/tests/getStudentTest/${testId}`
     const [result, setResult] = useState({})
     const [selectedAnsArr, setSelectedAnsArr] = useState([])
+    // let [searchParams, setSearchParams] = useSearchParams();
+    const sessionId = session_id
+    // var date_time = new Date().toLocaleString();
+    // console.log(date_time, "aaaaaaaaaaa");
+// console.log(searchParams.get("session_id"), "111111111111111111")
+
+    console.log(testId)
 
     const handleChange = (e, i, j) => {
 
@@ -55,13 +71,34 @@ const TestsDisplay = (test_id) => {
         fetchData()
     }, [])
 
-    const handleClick = () => {
-        setResult({
-            session_id: 1,
-            answerOptions: selectedAnsArr,
-        })
-        console.log(result)
+    // //////////////////////////////////////////////////////////////////////////////////
+
+    const handleClick = async () => {
+        const headers = {
+            method: "PUT",
+            body: JSON.stringify({
+                answerOptions: selectedAnsArr,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                'authorization': 'Bearer ' + ctx.token,
+            },
+
+        }
+        const fetching = async (err) => {
+            const response = await fetch(`http://localhost:3000/api/v1/tests/endSession/${sessionId}`, headers)
+            const resJson = await response.json()
+            // setCreatedSession(resJson)
+            console.log(resJson, "222222")
+            if (err) {
+                console.error(err)
+            }
+            navigate(`/allTest`)
+        }
+        fetching()
+        console.log(selectedAnsArr)
     }
+    // //////////////////////////////////////////////////////////////////////////////////
 
     
     return (

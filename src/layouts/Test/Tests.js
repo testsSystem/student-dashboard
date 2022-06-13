@@ -71,8 +71,6 @@ const Tests = () => {
                 const resJson = await response.json()
                 setCreatedSession(resJson)
                 console.log(resJson, "session")
-                // ctxData.session(resJson.result.id)
-                // ctxData.test(test_id)
                 navigate(`/test/${test_id}?session_id=${resJson.result.id}`, {state: {
                     sessionID: resJson.result.id,
                     testID: test_id

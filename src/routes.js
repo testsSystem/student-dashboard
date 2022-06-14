@@ -58,6 +58,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    inSideNav: false,
   },
   {
     type: "collapse",
@@ -66,6 +67,7 @@ const routes = [
     icon: <Icon fontSize="small">quiz</Icon>,
     route: "/allTests",
     component: <Tests />,
+    inSideNav: true,
   },
   // {
   //   type: "collapse",
@@ -83,14 +85,14 @@ const routes = [
   //   route: "/rtl",
   //   component: <RTL />,
   // },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    // component: <Notifications />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Notifications",
+  //   key: "notifications",
+  //   icon: <Icon fontSize="small">notifications</Icon>,
+  //   route: "/notifications",
+  //   // component: <Notifications />,
+  // },
   // {
   //   type: "collapse",
   //   name: "Profile",
@@ -106,6 +108,7 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/session",
     component: <Session />,
+    inSideNav: true,
   },
   {
     type: "collapse",
@@ -114,6 +117,7 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    inSideNav: true,
   },
   {
     type: "collapse",
@@ -122,6 +126,7 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+    inSideNav: true,
   },
 ];
 

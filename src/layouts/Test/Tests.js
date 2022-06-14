@@ -21,6 +21,7 @@ import DataTable from "examples/Tables/DataTable";
 import Session from 'layouts/session';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
+import { SessionsContext } from 'context/SessionsContext';
 
 
 const columns = [
@@ -32,7 +33,6 @@ const columns = [
 
 
 
-// var token = "eyJ0eXAiO...";
 
 
 
@@ -45,35 +45,45 @@ const Tests = () => {
     const [rows, setRows] = useState([])
     const navigate = useNavigate()
     const userID = jwt_decode(ctx.token).id;
+    const ctxData = useContext(SessionsContext);
 
     // console.log(decoded, "token");
 
 
     const handleClick = (test_id) => {
         console.log("test_id: " + test_id)
-        const createSession = () => {
+        console.log("user_id: " + userID)
+        const createSession = async () => {
             const headers = {
                 method: "POST",
+                body: JSON.stringify({
+                    user_id: userID,
+                    test_id: test_id,
+                }),
                 headers: {
+                    "Content-Type": "application/json",
                     'authorization': 'Bearer ' + ctx.token,
                 },
-                body: JSON.stringify({
-                    "user_id": userID,
-                    "test_id": test_id,
-                }),
+
             }
             const fetching = async (err) => {
                 const response = await fetch("http://localhost:3000/api/v1/tests/session", headers)
                 const resJson = await response.json()
                 setCreatedSession(resJson)
                 console.log(resJson, "session")
+                navigate(`/test/${test_id}?session_id=${resJson.result.id}`, {state: {
+                    sessionID: resJson.result.id,
+                    testID: test_id
+                }})
                 if (err) {
                     console.error(err)
                 }
             }
             fetching()
+            // navigate(`/test/${test_id}?session_id=${createdSession.result.id}`)
         }
         createSession()
+
     }
     useEffect(() => {
         const headers = {

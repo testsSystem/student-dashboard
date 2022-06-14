@@ -106,7 +106,7 @@ const routes = [
     name: "Session",
     key: "session",
     icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/session",
+    route: "/test/:id",
     component: <Session />,
     inSideNav: true,
   },

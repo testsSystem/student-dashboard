@@ -35,7 +35,7 @@ function Dashboard() {
     const token = window.localStorage.getItem("token") || null;
 
     const data = await axios({
-      url: `http://localhost:3000/api/v1/users/profile`,
+      url: `https://logietestapi.herokuapp.com/api/v1/users/profile`,
       headers: {
         "Content-Type": "application/json",
         Authorization: token ? `Bearer ${token}` : undefined,
@@ -52,7 +52,7 @@ function Dashboard() {
     const token = window.localStorage.getItem("token") || null;
 
     const data = await axios({
-      url: `http://localhost:3000/api/v1/students/getTests`,
+      url: `https://logietestapi.herokuapp.com/api/v1/students/getTests`,
       headers: {
         "Content-Type": "application/json",
         Authorization: token ? `Bearer ${token}` : undefined,
@@ -89,7 +89,7 @@ function Dashboard() {
               variant="h4"
               fontWeight="medium"
               color="white"
-            // mt={0}
+              // mt={0}
             >
               User Info
             </MDTypography>
@@ -98,21 +98,13 @@ function Dashboard() {
           <MDBox p={2} mt={0}>
             <Grid container p={4} spacing={5}>
               <Grid item xs={12} md={12}>
-                <MDTypography
-                  variant="h5"
-                  fontWeight="regular"
-                  color="text"
-                >
+                <MDTypography variant="h5" fontWeight="regular" color="text">
                   Full Name: {info.first_name} {info.last_name}
                 </MDTypography>
               </Grid>
 
               <Grid item xs={12} md={12}>
-                <MDTypography
-                  variant="h5"
-                  fontWeight="regular"
-                  color="text"
-                >
+                <MDTypography variant="h5" fontWeight="regular" color="text">
                   Email: {info.email}
                 </MDTypography>
               </Grid>
@@ -140,20 +132,12 @@ function Dashboard() {
           <MDBox p={2} mt={0} textAlign="center">
             <Grid container spacing={5}>
               <Grid item xs={12} md={12}>
-                <MDTypography
-                  variant="h5"
-                  fontWeight="regular"
-                  color="text"
-                >
+                <MDTypography variant="h5" fontWeight="regular" color="text">
                   All Taken Tests
                 </MDTypography>
               </Grid>
               <Grid item xs={12} md={12}>
-                <MDTypography
-                  variant="h5"
-                  fontWeight="regular"
-                  color="text"
-                >
+                <MDTypography variant="h5" fontWeight="regular" color="text">
                   {countTests}
                 </MDTypography>
               </Grid>

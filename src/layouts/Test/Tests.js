@@ -95,7 +95,7 @@ const Tests = () => {
             const response = await fetch(Url, headers)
             const resJson = await response.json()
             setStudentTest(resJson.result)
-            console.log(resJson.result)
+            console.log(resJson)
             if (err) {
                 console.error(err)
             }

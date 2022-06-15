@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import React, { useContext, useEffect, useState } from 'react'
+import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import Grid from "@mui/material/Grid";
@@ -35,56 +35,42 @@ const TestsDisplay = ({test_id, session_id}) => {
 
     console.log(testId)
 
-  const handleChange = (e, i, j) => {
-    if (
-      selectedAnsArr.some((ans) => ans.questionId === testData.Questions[i].id)
-    ) {
-      console.log("", "first");
-      let quIndex = selectedAnsArr.findIndex(
-        (ans) => testData.Questions[i].id === ans.questionId
-      );
-      selectedAnsArr[quIndex].selectedAnswer = +e.target.value;
-      console.log(selectedAnsArr);
-    } else {
-      console.log(testData.Questions[i].Answers_options[j], "sec");
-      setSelectedAnsArr((old) => [
-        ...old,
-        {
-          selectedAnswer: testData.Questions[i].Answers_options[j].id,
-          questionId: testData.Questions[i].Answers_options[j].question_id,
-        },
-      ]);
+    const handleChange = (e, i, j) => {
+
+        
+        if(selectedAnsArr.some((ans) => ans.questionId === testData.Questions[i].id)){
+            console.log("", "first")
+            let quIndex =selectedAnsArr.findIndex((ans) => testData.Questions[i].id === ans.questionId) 
+            selectedAnsArr[quIndex].selectedAnswer = +e.target.value
+            console.log(selectedAnsArr)
+        } else{
+            console.log(testData.Questions[i].Answers_options[j], "sec")
+            setSelectedAnsArr(old => [...old, {selectedAnswer: testData.Questions[i].Answers_options[j].id, questionId: testData.Questions[i].Answers_options[j].question_id}])
+        }
     }
-  };
-  console.log(selectedAnsArr);
+    console.log(selectedAnsArr)
+    
 
-  useEffect(() => {
-    const headers = {
-      headers: {
-        authorization: "Bearer " + ctx.token,
-      },
-    };
-    const fetchData = async (err) => {
-      const response = await fetch(url, headers);
-      const resJson = await response.json();
-      setTestsData(resJson.result);
-      console.log(resJson.result);
-      if (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
-  }, []);
+    useEffect(() => {
+        const headers = {
+            headers: {
+                'authorization': 'Bearer ' + ctx.token,
+            }
+        }
+        const fetchData = async (err) => {
 
-  const handleClick = () => {
-    setResult({
-      session_id: 1,
-      answerOptions: selectedAnsArr,
-    });
-    console.log(result);
-  };
+            const response = await fetch(url, headers)
+            const resJson = await response.json()
+            setTestsData(resJson.result)
+            console.log(resJson.result)
+            if (err) {
+                console.error(err)
+            }
 
- 
+        }
+        fetchData()
+    }, [])
+
     // //////////////////////////////////////////////////////////////////////////////////
 
     const handleClick = async () => {
@@ -165,27 +151,13 @@ const TestsDisplay = ({test_id, session_id}) => {
 
                                 </Grid>
                             </Grid>
-                          </Card>
                         </MDBox>
-                      </Grid>
-              
-              
-                <Grid item xs={12}>
-                  <MDButton
-                    color="info"
-                    variant="contained"
-                    onClick={handleClick}
-                  >
-                    Submit
-                  </MDButton>
-                </Grid>
-              </Grid>
-            </MDBox>
-          </Card>
-        </MDBox>
-      </DashboardLayout>
-    </>
-  );
-};
 
-export default TestsDisplay;
+                    </Card>
+                </MDBox>
+            </DashboardLayout>
+        </>
+    )
+}
+
+export default TestsDisplay

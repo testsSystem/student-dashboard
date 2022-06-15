@@ -73,6 +73,7 @@ function Dashboard() {
     <DashboardLayout>
       <MDBox pt={6} pb={3}>
         <Card>
+          {/* header */}
           <MDBox
             variant="gradient"
             bgColor="info"
@@ -81,32 +82,39 @@ function Dashboard() {
             mx={2}
             mt={-3}
             p={1}
+            //   mb={1}
             textAlign="center"
           >
-            <MDTypography variant="h5" fontWeight="medium" color="white">
-              Test Data
+            <MDTypography
+              variant="h4"
+              fontWeight="medium"
+              color="white"
+            // mt={0}
+            >
+              User Info
             </MDTypography>
           </MDBox>
+
           <MDBox p={2} mt={0}>
-            <Grid container spacing={5}>
-              <Grid item xs={4} md={4}>
-                <div>Full Name</div>
-                <br />
-                <div>
-                  {info.first_name} {info.last_name}
-                </div>
+            <Grid container p={4} spacing={5}>
+              <Grid item xs={12} md={12}>
+                <MDTypography
+                  variant="h5"
+                  fontWeight="regular"
+                  color="text"
+                >
+                  Full Name: {info.first_name} {info.last_name}
+                </MDTypography>
               </Grid>
 
-              <Grid item xs={12} md={4}>
-                <div>Email</div>
-                <br />
-                <div>{info.email}</div>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <div>Created Date</div>
-                <br />
-                {/* <div>{info.createdAt}</div> */}
-                <div>{moment(info.createdAt).format("YYYY/MM/DD")}</div>
+              <Grid item xs={12} md={12}>
+                <MDTypography
+                  variant="h5"
+                  fontWeight="regular"
+                  color="text"
+                >
+                  Email: {info.email}
+                </MDTypography>
               </Grid>
             </Grid>
           </MDBox>
@@ -132,11 +140,22 @@ function Dashboard() {
           <MDBox p={2} mt={0} textAlign="center">
             <Grid container spacing={5}>
               <Grid item xs={12} md={12}>
-                <div>All Tests taken</div>
-                <br />
-                <div>
-                  <h4> {countTests}</h4>
-                </div>
+                <MDTypography
+                  variant="h5"
+                  fontWeight="regular"
+                  color="text"
+                >
+                  All Taken Tests
+                </MDTypography>
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <MDTypography
+                  variant="h5"
+                  fontWeight="regular"
+                  color="text"
+                >
+                  {countTests}
+                </MDTypography>
               </Grid>
             </Grid>
           </MDBox>

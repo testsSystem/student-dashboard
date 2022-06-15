@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
@@ -48,6 +48,7 @@ import {
 } from "context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
+  const [hide, setHide] = useState(false)
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -57,6 +58,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     sidenavColor,
   } = controller;
   const location = useLocation();
+  useEffect(() => {
+   if(window.location.href.includes("/test")) {
+    setHide(false)
+   }else {
+    setHide(true)
+   }
+  }, [window.location.href])
   const collapseName = location.pathname.replace("/", "");
 
   let textColor = "white";
@@ -161,13 +169,14 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   );
 
   return (
-    <SidenavRoot
+    <div>
+      {hide ? <SidenavRoot
       {...rest}
       variant="permanent"
       ownerState={{ transparentSidenav, whiteSidenav, miniSidenav, darkMode }}
     >
       <MDBox pt={3} pb={1} px={4} textAlign="center">
-        <MDBox
+        {/* <MDBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
           top={0}
@@ -179,8 +188,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           <MDTypography variant="h6" color="secondary">
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </MDTypography>
-        </MDBox>
-        <MDBox component={NavLink} to="/" display="flex" alignItems="center">
+        </MDBox> */}
+        {/* <MDBox component={NavLink} to="/" display="flex" alignItems="center">
           {brand && (
             <MDBox component="img" src={brand} alt="Brand" width="2rem" />
           )}
@@ -197,14 +206,14 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
               {brandName}
             </MDTypography>
           </MDBox>
-        </MDBox>
+        </MDBox> */}
       </MDBox>
-      <Divider
+      {/* <Divider
         light={
           (!darkMode && !whiteSidenav && !transparentSidenav) ||
           (darkMode && !transparentSidenav && whiteSidenav)
         }
-      />
+      /> */}
       <List>{renderRoutes}</List>
       <MDBox p={2} mt="auto">
         {/* <MDButton
@@ -219,7 +228,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           upgrade to pro
         </MDButton> */}
       </MDBox>
-    </SidenavRoot>
+    </SidenavRoot> : <p></p>}
+    </div>
   );
 }
 

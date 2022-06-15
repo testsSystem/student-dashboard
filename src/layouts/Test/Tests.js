@@ -80,7 +80,6 @@ const Tests = () => {
                 }
             }
             fetching()
-            // navigate(`/test/${test_id}?session_id=${createdSession.result.id}`)
         }
         createSession()
 
@@ -108,8 +107,8 @@ const Tests = () => {
             console.log(data, "data");
             return {
                 title: data.title,
-                // startsAt: data.start_at,
-                // endsAt: data.end_at,
+                startsAt: data.start_at,
+                endsAt: data.end_at,
                 startTest: <MDButton color='info' variant='contained' onClick={() => handleClick(data.id)} >Start now</MDButton>
             }
         })

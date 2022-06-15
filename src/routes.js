@@ -48,7 +48,6 @@ import SignUp from "layouts/authentication/sign-up";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Tests from "layouts/Test/Tests";
-import TestsTable from "layouts/Test/componentsShared/TestsTable";
 
 const routes = [
   {
@@ -58,7 +57,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-    inSideNav: false,
+    inSideNav: true,
   },
   {
     type: "collapse",
@@ -69,38 +68,6 @@ const routes = [
     component: <Tests />,
     inSideNav: true,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Billing",
-  //   key: "billing",
-  //   icon: <Icon fontSize="small">receipt_long</Icon>,
-  //   route: "/billing",
-  //   component: <Billing />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "RTL",
-  //   key: "rtl",
-  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-  //   route: "/rtl",
-  //   component: <RTL />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Notifications",
-  //   key: "notifications",
-  //   icon: <Icon fontSize="small">notifications</Icon>,
-  //   route: "/notifications",
-  //   // component: <Notifications />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Profile",
-  //   key: "profile",
-  //   icon: <Icon fontSize="small">person</Icon>,
-  //   route: "/profile",
-  //   component: <Profile />,
-  // },
   {
     type: "collapse",
     name: "Session",
@@ -108,7 +75,7 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/test/:id",
     component: <Session />,
-    inSideNav: true,
+    inSideNav: false,
   },
   {
     type: "collapse",

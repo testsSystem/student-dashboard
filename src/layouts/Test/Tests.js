@@ -22,6 +22,7 @@ import Session from "layouts/session";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { SessionsContext } from "context/SessionsContext";
+import moment from "moment";
 
 const columns = [
   { Header: "Test Title", accessor: "title", width: "40%", align: "left" },
@@ -105,8 +106,9 @@ const Tests = () => {
           console.log(data, "data");
           return {
             title: data.title,
-            startsAt: data.start_at,
-            endsAt: data.end_at,
+
+            startsAt: moment(data.start_at).format("YYYY/MM/DD:HH:MM"),
+            endsAt: moment(data.end_at).format("YYYY/MM/DD:HH:MM"),
             startTest: (
               <MDButton
                 color="info"

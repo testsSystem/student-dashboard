@@ -31,6 +31,12 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function Basic() {
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [serverResponse, setServerResponse] = useState("");
+  const [snackBarType, setSnackBarType] = useState("success");
+
+  const closeSnackBar = () => setOpenSnackBar(false);
+
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
@@ -54,6 +60,13 @@ function Basic() {
     })
       .then((response) => {
         response.json().then((loggedIn) => {
+          setServerResponse(loggedIn.message);
+          if (loggedIn.success) {
+            setSnackBarType("success");
+          } else {
+            setSnackBarType("error");
+          }
+          setOpenSnackBar(true);
           if (loggedIn.success) {
             ctx.login(loggedIn.token);
             navigate("/dashboard");
@@ -63,109 +76,126 @@ function Basic() {
       .catch((e) => e);
   };
   return (
-    //<BasicLayout image={bgImage}>
-    <Card>
-      <MDBox
-        variant="gradient"
-        bgColor="info"
-        borderRadius="lg"
-        coloredShadow="info"
-        mx={2}
-        mt={-3}
-        p={2}
-        mb={1}
-        textAlign="center"
-      >
-        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-          Sign in
-        </MDTypography>
-        <Grid
-          container
-          spacing={3}
-          justifyContent="center"
-          sx={{ mt: 1, mb: 2 }}
+    <BasicLayout image={bgImage}>
+      <Card>
+        <MDBox
+          variant="gradient"
+          bgColor="info"
+          borderRadius="lg"
+          coloredShadow="info"
+          mx={2}
+          mt={-3}
+          p={2}
+          mb={1}
+          textAlign="center"
         >
-          <Grid item xs={2}>
-            <MDTypography
-              component={MuiLink}
-              href="#"
-              variant="body1"
-              color="white"
-            >
-              <FacebookIcon color="inherit" />
-            </MDTypography>
-          </Grid>
-          <Grid item xs={2}>
-            <MDTypography
-              component={MuiLink}
-              href="#"
-              variant="body1"
-              color="white"
-            >
-              <GitHubIcon color="inherit" />
-            </MDTypography>
-          </Grid>
-          <Grid item xs={2}>
-            <MDTypography
-              component={MuiLink}
-              href="#"
-              variant="body1"
-              color="white"
-            >
-              <GoogleIcon color="inherit" />
-            </MDTypography>
-          </Grid>
-        </Grid>
-      </MDBox>
-      <MDBox pt={4} pb={3} px={3}>
-        <MDBox component="form" role="form">
-          <MDBox mb={2}>
-            <MDInput type="email" label="Email" fullWidth ref={emailRef} />
-          </MDBox>
-          <MDBox mb={2}>
-            <MDInput
-              type="password"
-              label="Password"
-              fullWidth
-              ref={passwordRef}
-            />
-          </MDBox>
-          <MDBox display="flex" alignItems="center" ml={-1}>
-            <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-            <MDTypography
-              variant="button"
-              fontWeight="regular"
-              color="text"
-              onClick={handleSetRememberMe}
-              sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-            >
-              &nbsp;&nbsp;Remember me
-            </MDTypography>
-          </MDBox>
-          <MDBox mt={4} mb={1}>
-            <MDButton variant="gradient" color="info" fullWidth onClick={login}>
-              sign in
-            </MDButton>
-          </MDBox>
-          <MDBox mt={3} mb={1} textAlign="center">
-            <MDTypography variant="button" color="text">
-              Don&apos;t have an account?{" "}
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            Sign in
+          </MDTypography>
+          <Grid
+            container
+            spacing={3}
+            justifyContent="center"
+            sx={{ mt: 1, mb: 2 }}
+          >
+            <Grid item xs={2}>
               <MDTypography
-                component={Link}
-                to="/authentication/sign-up"
-                variant="button"
-                color="info"
-                fontWeight="medium"
-                textGradient
+                component={MuiLink}
+                href="#"
+                variant="body1"
+                color="white"
               >
-                Sign up
+                <FacebookIcon color="inherit" />
               </MDTypography>
-            </MDTypography>
+            </Grid>
+            <Grid item xs={2}>
+              <MDTypography
+                component={MuiLink}
+                href="#"
+                variant="body1"
+                color="white"
+              >
+                <GitHubIcon color="inherit" />
+              </MDTypography>
+            </Grid>
+            <Grid item xs={2}>
+              <MDTypography
+                component={MuiLink}
+                href="#"
+                variant="body1"
+                color="white"
+              >
+                <GoogleIcon color="inherit" />
+              </MDTypography>
+            </Grid>
+          </Grid>
+        </MDBox>
+        <MDBox pt={4} pb={3} px={3}>
+          <MDBox component="form" role="form">
+            <MDBox mb={2}>
+              <MDInput type="email" label="Email" fullWidth ref={emailRef} />
+            </MDBox>
+            <MDBox mb={2}>
+              <MDInput
+                type="password"
+                label="Password"
+                fullWidth
+                ref={passwordRef}
+              />
+            </MDBox>
+            <MDBox display="flex" alignItems="center" ml={-1}>
+              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+              <MDTypography
+                variant="button"
+                fontWeight="regular"
+                color="text"
+                onClick={handleSetRememberMe}
+                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
+              >
+                &nbsp;&nbsp;Remember me
+              </MDTypography>
+            </MDBox>
+            <MDBox mt={4} mb={1}>
+              <MDButton
+                variant="gradient"
+                color="info"
+                fullWidth
+                onClick={login}
+              >
+                sign in
+              </MDButton>
+            </MDBox>
+            <MDBox mt={3} mb={1} textAlign="center">
+              <MDTypography variant="button" color="text">
+                Don&apos;t have an account?{" "}
+                <MDTypography
+                  component={Link}
+                  to="/authentication/sign-up"
+                  variant="button"
+                  color="info"
+                  fontWeight="medium"
+                  textGradient
+                >
+                  Sign up
+                </MDTypography>
+              </MDTypography>
+            </MDBox>
           </MDBox>
         </MDBox>
-      </MDBox>
-    </Card>
-    //  </BasicLayout>
+      </Card>
+
+      <MDSnackbar
+        color={snackBarType}
+        icon={snackBarType == "success" ? "check" : "warning"}
+        title="Test Maker App"
+        content={serverResponse}
+        open={openSnackBar}
+        // onClose={closeSnackBar}
+        close={closeSnackBar}
+        dateTime=""
+        bgWhite
+      />
+    </BasicLayout>
   );
 }
 export default Basic;

@@ -25,7 +25,7 @@ const Session = () => {
   const start = () => {
     const startSession = async () => {
       const fectFun = await fetch(
-        `https://logietestapi.herokuapp.com/api/v1/tests/startSession/${state.sessionID}`,
+        `http://localhost:3000/api/v1/tests/startSession/${state.sessionID}`,
         {
           method: "PUT",
           headers: {

@@ -48,7 +48,7 @@ import {
 } from "context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
-  const [hide, setHide] = useState(false)
+  const [hide, setHide] = useState(false);
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -59,12 +59,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   } = controller;
   const location = useLocation();
   useEffect(() => {
-   if(window.location.href.includes("/test")) {
-    setHide(false)
-   }else {
-    setHide(true)
-   }
-  }, [window.location.href])
+    if (window.location.href.includes("/test")) {
+      setHide(false);
+    } else {
+      setHide(true);
+    }
+  }, [window.location.href]);
   const collapseName = location.pathname.replace("/", "");
 
   let textColor = "white";
@@ -170,13 +170,19 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   return (
     <div>
-      {hide ? <SidenavRoot
-      {...rest}
-      variant="permanent"
-      ownerState={{ transparentSidenav, whiteSidenav, miniSidenav, darkMode }}
-    >
-      <MDBox pt={3} pb={1} px={4} textAlign="center">
-        {/* <MDBox
+      {hide ? (
+        <SidenavRoot
+          {...rest}
+          variant="permanent"
+          ownerState={{
+            transparentSidenav,
+            whiteSidenav,
+            miniSidenav,
+            darkMode,
+          }}
+        >
+          <MDBox pt={3} pb={1} px={4} textAlign="center">
+            {/* <MDBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
           top={0}
@@ -189,7 +195,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </MDTypography>
         </MDBox> */}
-        {/* <MDBox component={NavLink} to="/" display="flex" alignItems="center">
+            {/* <MDBox component={NavLink} to="/" display="flex" alignItems="center">
           {brand && (
             <MDBox component="img" src={brand} alt="Brand" width="2rem" />
           )}
@@ -207,16 +213,16 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             </MDTypography>
           </MDBox>
         </MDBox> */}
-      </MDBox>
-      {/* <Divider
+          </MDBox>
+          {/* <Divider
         light={
           (!darkMode && !whiteSidenav && !transparentSidenav) ||
           (darkMode && !transparentSidenav && whiteSidenav)
         }
       /> */}
-      <List>{renderRoutes}</List>
-      <MDBox p={2} mt="auto">
-        {/* <MDButton
+          <List>{renderRoutes}</List>
+          <MDBox p={2} mt="auto">
+            {/* <MDButton
           component="a"
           href="https://www.creative-tim.com/product/material-dashboard-pro-react"
           target="_blank"
@@ -227,8 +233,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         >
           upgrade to pro
         </MDButton> */}
-      </MDBox>
-    </SidenavRoot> : <p></p>}
+          </MDBox>
+        </SidenavRoot>
+      ) : (
+        <p></p>
+      )}
     </div>
   );
 }

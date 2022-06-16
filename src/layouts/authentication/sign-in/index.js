@@ -28,10 +28,17 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 // Authentication layout components
+import MDSnackbar from "components/MDSnackbar";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function SignIn() {
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [serverResponse, setServerResponse] = useState("");
+  const [snackBarType, setSnackBarType] = useState("success");
+
+  const closeSnackBar = () => setOpenSnackBar(false);
+
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
@@ -44,7 +51,7 @@ function SignIn() {
     const password = passwordRef.current.querySelector(
       "input[type=password]"
     ).value;
-    fetch(`https://logietestapi.herokuapp.com/api/v1/students/login`, {
+    fetch(`http://localhost:3000/api/v1/students/login`, {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -57,6 +64,15 @@ function SignIn() {
       .then((response) => {
         console.log(response, "llllllllllllllllllll");
         response.json().then((loggedIn) => {
+          setServerResponse(loggedIn.message);
+
+          if (loggedIn.success) {
+            setSnackBarType("success");
+          } else {
+            setSnackBarType("error");
+          }
+          setOpenSnackBar(true);
+
           console.log(loggedIn);
           if (loggedIn.success) {
             console.log(loggedIn);
@@ -176,6 +192,17 @@ function SignIn() {
           </MDBox>
         </MDBox>
       </Card>
+      <MDSnackbar
+        color={snackBarType}
+        icon={snackBarType == "success" ? "check" : "warning"}
+        title="Test Maker App"
+        content={serverResponse}
+        open={openSnackBar}
+        // onClose={closeSnackBar}
+        close={closeSnackBar}
+        dateTime=""
+        bgWhite
+      />
     </BasicLayout>
   );
 }

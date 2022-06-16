@@ -24,7 +24,7 @@ const TestsDisplay = ({ test_id, session_id }) => {
   const navigate = useNavigate();
 
   const testId = test_id;
-  const url = `https://logietestapi.herokuapp.com/api/v1/tests/getStudentTest/${testId}`;
+  const url = `http://localhost:3000/api/v1/tests/getStudentTest/${testId}`;
   const [result, setResult] = useState({});
   const [selectedAnsArr, setSelectedAnsArr] = useState([]);
   // let [searchParams, setSearchParams] = useSearchParams();
@@ -91,7 +91,7 @@ const TestsDisplay = ({ test_id, session_id }) => {
     };
     const fetching = async (err) => {
       const response = await fetch(
-        `https://logietestapi.herokuapp.com/api/v1/tests/endSession/${sessionId}`,
+        `http://localhost:3000/api/v1/tests/endSession/${sessionId}`,
         headers
       );
       const resJson = await response.json();

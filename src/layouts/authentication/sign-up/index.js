@@ -52,7 +52,7 @@ function SignUp() {
       "input[type=password]"
     ).value;
 
-    fetch(`http://localhost:3000/api/v1/students/signup`, {
+    fetch(`https://logietestapi.herokuapp.com/api/v1/students/signup`, {
       method: "POST",
       body: JSON.stringify({
         email,

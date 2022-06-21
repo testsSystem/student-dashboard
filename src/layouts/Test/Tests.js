@@ -35,7 +35,7 @@ const Tests = () => {
   const [studentTest, setStudentTest] = useState();
   const [createdSession, setCreatedSession] = useState();
   const ctx = useContext(AuthContext);
-  const Url = "http://localhost:3000/api/v1/tests";
+  const Url = "https://logietestapi.herokuapp.com/api/v1/tests";
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
   const userID = jwt_decode(ctx.token).id;
@@ -60,7 +60,7 @@ const Tests = () => {
       };
       const fetching = async (err) => {
         const response = await fetch(
-          "http://localhost:3000/api/v1/tests/session",
+          "https://logietestapi.herokuapp.com/api/v1/tests/session",
           headers
         );
         const resJson = await response.json();

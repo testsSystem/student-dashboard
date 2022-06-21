@@ -51,7 +51,7 @@ function SignIn() {
     const password = passwordRef.current.querySelector(
       "input[type=password]"
     ).value;
-    fetch(`http://localhost:3000/api/v1/students/login`, {
+    fetch(`https://logietestapi.herokuapp.com/api/v1/students/login`, {
       method: "POST",
       body: JSON.stringify({
         email,
